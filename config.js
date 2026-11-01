@@ -20,7 +20,7 @@ window.LASANHADA = {
   // Endereço do Apps Script publicado (veja apps-script/LEIA-ME.md).
   // Enquanto estiver vazio, a taxa de entrega é combinada no WhatsApp
   // e o pedido vai direto pra conversa, sem Pix automático.
-  apiUrl: "",
+  apiUrl: "https://script.google.com/macros/s/AKfycbz02WI2cpnSxjf48_lk1IHJagIFojPKe_NTG6pS_RV73E2Iz8J1acC1ehbY7uZ9A5Sz/exec",
 
   // Capacidade de cada fornada (em lasanhas). Família conta como 2.
   capacidade: 25,
