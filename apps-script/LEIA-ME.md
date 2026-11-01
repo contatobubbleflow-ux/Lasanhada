@@ -19,4 +19,5 @@ A planilha já está preparada: a aba Cardápio ganhou Vegetariana 500 ml e 700 
 - O pedido entra com Produção **A produzir** e Pagamento **Pendente**. Quando o Pix cair, troque para **Pago**.
 - Pedido que não pagou: apague as linhas dele. As lasanhas voltam a ficar disponíveis no site.
 - Para fechar antes da hora: no `config.js`, troque `status: "auto"` por `"esgotado"` ou `"fechado"`.
+- Aviso de pedido novo por e-mail para contato.bubbleflow@gmail.com e suelenfloriano617@gmail.com (lista em `EMAILS` no topo do código).
 - Mudou o `Code.gs`? **Implantar → Gerenciar implantações → editar → Nova versão** (o endereço continua o mesmo).
