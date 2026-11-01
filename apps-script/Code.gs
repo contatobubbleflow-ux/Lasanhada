@@ -81,8 +81,7 @@ function ultimaLinha(sh) {
 
 /* ---------- pedido ---------- */
 function pedido(p) {
-  var f = fornada();
-  if (!f.aberto) return { ok: false, erro: "fechado" };
+  var f = fornada(); // fora da janela, o pedido já cai na fornada seguinte
 
   // linhas no formato da planilha: "Bolonhesa 500 ml", "Vegetariana 700 ml"…
   var linhas = {}, ordem = [], desconto = 0, sub = 0, lasanhas = 0;

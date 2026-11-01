@@ -28,9 +28,11 @@
     var aberto = (dow >= 1 && dow < F.diaSemana) || (dow === F.diaSemana && n.h < F.hora);
     if (C.status === "aberto" || TESTE) aberto = true;
     if (C.status === "fechado") aberto = false;
-    var est = aberto ? ((dow === F.diaSemana && n.h >= 14 && !TESTE) ? "urgente" : "aberto") : "fechado";
+    // fora da janela (quinta 20h até domingo) o pedido vai para a fornada seguinte
+    var est = aberto ? ((dow === F.diaSemana && n.h >= 14 && !TESTE) ? "urgente" : "aberto") : "proxima";
+    if (C.status === "fechado") est = "fechado";
     if (C.status === "esgotado" || (api.vendidas !== null && api.vendidas >= C.capacidade)) est = "esgotado";
-    var f = { estado: est, podePedir: est === "aberto" || est === "urgente" };
+    var f = { estado: est, podePedir: est === "aberto" || est === "urgente" || est === "proxima" };
     if (aberto) { var s = (6 - dow + 7) % 7; f.sab = soma(n.base, s); f.dom = soma(n.base, s + 1); }
     else { var g = dow === 0 ? 1 : 8 - dow; f.seg = soma(n.base, g); f.sab = soma(n.base, g + 5); f.dom = soma(n.base, g + 6); }
     if (api.vendidas !== null) f.restam = Math.max(0, C.capacidade - api.vendidas);
@@ -44,7 +46,8 @@
     if (f.estado === "aberto") { pill.textContent = "Pedidos abertos"; txt = "Fornada de sáb " + ddmm(f.sab) + " e dom " + ddmm(f.dom) + "." + resto; }
     else if (f.estado === "urgente") { pill.textContent = "Fecha hoje, 20h"; txt = "Últimas horas pra fornada de sáb " + ddmm(f.sab) + " e dom " + ddmm(f.dom) + "." + resto; }
     else if (f.estado === "esgotado") { pill.textContent = "Esgotou!"; txt = "As " + C.capacidade + " lasanhas da semana já têm dono." + (f.seg ? " Próxima fornada abre segunda, " + ddmm(f.seg) + "." : ""); }
-    else { pill.textContent = "Pedidos fechados"; txt = "Essa fornada já tá no forno. A próxima abre segunda, " + ddmm(f.seg) + "."; }
+    else if (f.estado === "proxima") { pill.textContent = "Pedidos abertos"; txt = "Pedidos de agora entram na próxima fornada: sáb " + ddmm(f.sab) + " e dom " + ddmm(f.dom) + "." + resto; }
+    else { pill.textContent = "Pedidos fechados"; txt = "Os pedidos estão fechados por enquanto. Chama a gente no WhatsApp."; }
     $("#fornada-txt").textContent = txt;
     var ban = $("#closed-banner");
     ban.hidden = f.podePedir;
